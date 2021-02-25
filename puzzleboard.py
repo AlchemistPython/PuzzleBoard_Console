@@ -25,12 +25,6 @@ class PuzzleBoard:
                 identifies.setdefault(account,col)
                 account += 1
             account = account      
-        # for rows in range(len(array)):
-        #     for cols in array[rows]:
-        #         if cols == '':
-        #             identifies.setdefault(16,cols)
-        #         else:
-        #             identifies.setdefault(int(cols),cols)
         return identifies
     
     def shuffleItems(self, array):
@@ -64,53 +58,3 @@ new_puzzle.fillPuzzle(board)
 new_puzzle.shuffleItems(board)
 dictionary = new_puzzle.defineKeys(board)
 new_puzzle.showPuzzle(dictionary) 
-# new_puzzle = PuzzleBoard()
-# board = list()
-# new_puzzle.fillPuzzle(board)
-# dictionary = new_puzzle.defineKeys(board)
-
-
-# print("Antes: ")
-# new_puzzle.showPuzzle(board)
-# new_puzzle.shuffleItems(board)
-# # dictionary = new_puzzle.defineKeys(board)
-# # print("Diccionario:")
-# # new_puzzle.showPuzzle(dictionary)
-# print("Despues: ")
-# new_puzzle.showPuzzle(board)
-# """ que con el diccionario el usuario identificara el numero inicial a cambiar y el numero por el cual quiere
-# intercambiar, se hace un swap """
-#     def fillPuzzle(self):
-#         counter:int = 0
-#         opening:int, ending:int = 1,5
-#         while counter < 16:
-#             nlist:list = list()
-#             for n:int in range(opening,ending):
-#                 n = '' if n == 16 else n
-#                 nlist.append(str(n))
-#             counter += 4
-#             self.board.append(nlist)
-#             opening, ending = ending,ending + 4
-            
-#         return board:list
-    
-#     def shuffleItems(self,board):
-#         from random import shuffle
-#         for n in board:
-#             shuffle(n) 
-#         return board:list
-    
-#     def labelItems(self,board:list):
-#         diccionary:dict = {}
-#         cont = 0
-#         for f in range(4):
-#             for c in board[f]:
-#                 cont+=1
-#                 diccionary.setdefault(cont,c)
-#         return diccionary
-                
-#     def showList(self):
-#         print(self.labelItems()) self.shuffleItems(self.fillPuzzle())
-
-# new_puzzleboard = PuzzleBoard()
-# print(new_puzzleboard.showList())
