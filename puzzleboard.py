@@ -1,60 +1,59 @@
-class PuzzleBoard:
+class Puzzle:
     
-    def fillPuzzle(self, array):
-        """ Method that fill the list of lists """
-        account,opening,ending = 0,1,5
-        
-        while account < 16:
-            newlist:list = list()
-            for number in range(opening, ending):
-                number = ' ' if  number == 16 else number
-                newlist.append(str(number))
-            account += 4
-            array.append(newlist)
-            opening, ending = ending, ending + 4
-        
-        return array
+    def __init__(self):
+        self.array = list()
+        self.dict = dict()
+        self.account = 0
     
-    def defineKeys(self, array):
-        """Define the keys of every value in the list of lists"""
-        account = 1
-        identifies = dict()
-        
-        for row in array:
-            for col in row:
-                identifies.setdefault(account,col)
-                account += 1
-            account = account      
-        return identifies
+    def fillPuzzle(self):
+        """Method that fill the list of lists"""
+        # account = self.account
+        newlist = list()
+        for account, number in enumerate(range(1,17),start=1):
+            number = str(number) if number != 16 else 'X'
+            newlist.append(number)
+            if account in (4,8,12,16):
+                self.array.append(newlist)
+                newlist = list()
+        return self.array
     
-    def shuffleItems(self, array):
-        """Method the return a list of lists shuffles"""
+    def shuffleItems(self):
+        """Method that shuffle a list of lists """
         from random import shuffle
-        
-        shuffle(array)
-        
-        for sublist in array:
+        # shuffle(self.array)
+        for sublist in self.array:
             shuffle(sublist)
-        
-        return array
+        return self.array
     
-    def showPuzzle(self, d):
-        """Print the board"""
-        account,newline = 0,4
-        print("-------------------")
-        for key,value in d.items():
-            if len(value) == 2:
-                print(f"{value}|".rjust(4),end=' ')
+    def establishKeys(self):
+        account = self.account
+        for boxes in self.array:
+            for account, element in enumerate(boxes,start=account+1):
+                self.dict.setdefault(account,element)
+            account = account
+        return self.dict
+        
+    def showArray(self):
+        print(f"\nLista : {self.array}")
+    
+    def showPuzzle(self):
+        print("-----------------------".rjust(4))
+        for account, value in enumerate(self.dict.values()):
+            if len(value) > 1:
+                print(f"|{value} |".rjust(3),end=' ')
             else:
-                print(f"{value} |".rjust(4),end=' ')
-            account += 1
-            if account == newline:
-                print("\n-------------------")
-                newline += 4
+                print(f"| {value} |".rjust(4),end=' ')
+            if account in (3,7,11,15):
+                print("\n-----------------------")
 
-new_puzzle = PuzzleBoard()
-board = list()
-new_puzzle.fillPuzzle(board)
-new_puzzle.shuffleItems(board)
-dictionary = new_puzzle.defineKeys(board)
-new_puzzle.showPuzzle(dictionary) 
+
+newpuzzle = Puzzle()
+newpuzzle.showArray()
+newpuzzle.fillPuzzle()
+newpuzzle.showArray()
+newpuzzle.shuffleItems()
+print(f"\nDictionary: {newpuzzle.establishKeys()}")
+# newpuzzle.showArray()
+# newpuzzle.showArray()
+newpuzzle.showPuzzle()
+print()
