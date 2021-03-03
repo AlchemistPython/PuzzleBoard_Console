@@ -1,8 +1,9 @@
-def decorator(function):
-    def printPuzzle(obj,*args):
-        function(obj,*args)
+def showBoard(method_to_decorate):
+    """Method that print the puzzle board"""
+    def printPuzzle(self,*args):
+        method_to_decorate(self,*args)
         # printing the puzzle
-        for account,rows in enumerate(obj.puzzle_board):
+        for account,rows in enumerate(self.puzzle_board):
             print("\n-----------------------")
             for element in rows:
                 if len(element) > 1:
@@ -13,23 +14,24 @@ def decorator(function):
                 print("\n-----------------------")
     return printPuzzle
 
-def shuffleItems(function):
-    def shuffle(obj):
+def shuffleItems(method_to_decorate):
+    """Method shuffle the items inside the list"""
+    def shuffle(self):
+        method_to_decorate(self)
         from random import shuffle
-        shuffle(obj.puzzle_board)
-        for sublist in obj.puzzle_board:
+        shuffle(self.puzzle_board)
+        for sublist in self.puzzle_board:
             shuffle(sublist)
-        function(obj)
     return shuffle
             
 class Puzzle:
     def __init__(self):
         self.puzzle_board = []
         self.EMPTY = ' '
-    # check this
-    @decorator
+    @showBoard
     @shuffleItems
     def fillBoard(self):
+        """Method that fills the list puzzle_board with list of numbers from 1 to 15 and an empty space"""
         new_list = list()
         account = 0
         for account, number in enumerate(range(1,17),start=1):
@@ -40,6 +42,7 @@ class Puzzle:
                 new_list = list()
     
     def findItem(self, value=' '):
+        """Method what find the coordenates of the value, if the value it's empty use the default value"""
         row, col = 0,0
         for rows in range(len(self.puzzle_board)):
             if value in self.puzzle_board[rows]:
@@ -47,9 +50,9 @@ class Puzzle:
                 break
         return row, col
     
-    @decorator
+    @showBoard
     def swapItems(self, value):
-        
+        """Method that swap the items if there are near"""
         empty_row, empty_col = self.findItem(self.EMPTY)
         value_row, value_col = self.findItem(value)
         patterns = [(empty_row - 1,empty_col),(empty_row + 1,empty_col),(empty_row,empty_col -1),(empty_row,empty_col + 1)]
@@ -57,7 +60,7 @@ class Puzzle:
         if (value_row,value_col) in patterns:
             self.puzzle_board[value_row][value_col], self.puzzle_board[empty_row][empty_col] = self.puzzle_board[empty_row][empty_col],self.puzzle_board[value_row][value_col]
         else:
-            print("No se puede chavo")
+            print("\nCan't move, empty space is not close")
 
     
     
