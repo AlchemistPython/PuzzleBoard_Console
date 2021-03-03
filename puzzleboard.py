@@ -1,7 +1,7 @@
 def showBoard(method_to_decorate):
     """Method that print the puzzle board"""
-    def printPuzzle(self,*args):
-        method_to_decorate(self,*args)
+    def printPuzzle(self):
+        method_to_decorate(self)
         # printing the puzzle
         for account,rows in enumerate(self.puzzle_board):
             print("\n-----------------------")
@@ -15,7 +15,7 @@ def showBoard(method_to_decorate):
     return printPuzzle
 
 def shuffleItems(method_to_decorate):
-    """Method shuffle the items inside the list"""
+    """Method that shuffle the items inside the list"""
     def shuffle(self):
         method_to_decorate(self)
         from random import shuffle
@@ -28,6 +28,7 @@ class Puzzle:
     def __init__(self):
         self.puzzle_board = []
         self.EMPTY = ' '
+    
     @showBoard
     @shuffleItems
     def fillBoard(self):
@@ -42,7 +43,7 @@ class Puzzle:
                 new_list = list()
     
     def findItem(self, value=' '):
-        """Method what find the coordenates of the value, if the value it's empty use the default value"""
+        """Method that find the coordenates of the value, if the value it's empty use the default value"""
         row, col = 0,0
         for rows in range(len(self.puzzle_board)):
             if value in self.puzzle_board[rows]:
@@ -50,25 +51,56 @@ class Puzzle:
                 break
         return row, col
     
+    #getter function
+    @property
+    def number(self):
+        return self.__number
+    
+    @number.setter
+    def number(self, value):
+        numbers = [str(str_number) for str_number in range(1,16)]
+        if value in numbers:
+            self.__number = value
+        else:
+            print("This number there isn't in the board!")
+    
+    @number.deleter
+    def number(self):
+        del self.__number
+    
     @showBoard
-    def swapItems(self, value):
+    def swapItems(self):
         """Method that swap the items if there are near"""
         empty_row, empty_col = self.findItem(self.EMPTY)
-        value_row, value_col = self.findItem(value)
+        value_row, value_col = self.findItem(self.__number)
         patterns = [(empty_row - 1,empty_col),(empty_row + 1,empty_col),(empty_row,empty_col -1),(empty_row,empty_col + 1)]
         
         if (value_row,value_col) in patterns:
             self.puzzle_board[value_row][value_col], self.puzzle_board[empty_row][empty_col] = self.puzzle_board[empty_row][empty_col],self.puzzle_board[value_row][value_col]
         else:
             print("\nCan't move, empty space is not close")
-
     
     
 
 new_puzzle = Puzzle()
 new_puzzle.fillBoard()
-new_puzzle.swapItems('8')
-new_puzzle.swapItems('15')
-new_puzzle.swapItems('14')
-new_puzzle.swapItems('13')
-new_puzzle.swapItems('10')
+
+new_puzzle.number = '8'
+new_puzzle.swapItems()
+del new_puzzle.number
+
+new_puzzle.number = '15'
+new_puzzle.swapItems()
+del new_puzzle.number
+
+new_puzzle.number = '14'
+new_puzzle.swapItems()
+del new_puzzle.number
+
+# new_puzzle.number = 13
+# new_puzzle.swapItems()
+# del new_puzzle.number
+
+new_puzzle.number = '10'
+new_puzzle.swapItems()
+# del new_puzzle.number
