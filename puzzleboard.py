@@ -1,3 +1,4 @@
+from random import shuffle
 def showPuzzle(function):
     def printPuzzle(self):
         puzzle = function(self)
@@ -11,31 +12,21 @@ def showPuzzle(function):
                     print(f"| {value} |".rjust(4),end=' ')
             if account == 3:
                 print("\n-----------------------")
-    return printPuzzle
-
-def mix(function):
-    def mixture(self):
-        from random import shuffle
-        puzzle = function(self)
-        shuffle(puzzle)
-        for row in puzzle:
-            shuffle(row)
-        return puzzle
-    return mixture              
+    return printPuzzle          
 class Puzzle:
     
     def __init__(self):
         self.__numbers =  [str(number) for number in range(1,17)]
         self.__board = list()
         self.__predefinedboard = list()
-        self.__EMPTY = ' '
         self.__kind = ''
+        self.__EMPTY = ' '
     
     @showPuzzle
-    # @mix
     def fillBoard(self):
         """Method that fill the list"""
         temporal_list = list()
+        shuffle(self.__numbers) 
         for account, number in enumerate(self.__numbers,start=1):
             number = str(number) if account != 16 else self.__EMPTY
             temporal_list.append(number)
@@ -132,21 +123,21 @@ class Puzzle:
 new_puzzle = Puzzle()
 new_puzzle.fillBoard()
 
-new_puzzle.kind = "Diagonal"
-new_puzzle.whatBoard()
-del new_puzzle.kind
+# new_puzzle.kind = "Diagonal"
+# new_puzzle.whatBoard()
+# del new_puzzle.kind
 
-new_puzzle.kind = "Spiral"
-new_puzzle.whatBoard()
-del new_puzzle.kind
+# new_puzzle.kind = "Spiral"
+# new_puzzle.whatBoard()
+# del new_puzzle.kind
 
-new_puzzle.kind = "Impossible"
-new_puzzle.whatBoard()
-del new_puzzle.kind
+# new_puzzle.kind = "Impossible"
+# new_puzzle.whatBoard()
+# del new_puzzle.kind
 
-new_puzzle.kind = "Snail"
-new_puzzle.whatBoard()
-del new_puzzle.kind
+# new_puzzle.kind = "Snail"
+# new_puzzle.whatBoard()
+# del new_puzzle.kind
 # new_puzzle.number='15'
 # new_puzzle.swapItems()
 # del new_puzzle.number
