@@ -60,20 +60,20 @@ class Puzzle:
         return self.__board
     # it's just temporal, this it's gonna be in player class
     # getter
-    @property
-    def number(self):
-        return self.__number
-    # setter
-    @number.setter
-    def number(self, n):
-        if n in self.__numbers:
-            self.__number = n
-        else:
-            raise TypeError("Expected a number from the board!")
-    # deleter
-    @number.deleter
-    def number(self):
-        del self.__number
+    # @property
+    # def number(self):
+    #     return self.__number
+    # # setter
+    # @number.setter
+    # def number(self, n):
+    #     if n in self.__numbers:
+    #         self.__number = n
+    #     else:
+    #         raise TypeError("Expected a number from the board!")
+    # # deleter
+    # @number.deleter
+    # def number(self):
+    #     del self.__number
     
     # getter
     @property
@@ -120,8 +120,8 @@ class Puzzle:
         return puzzle_board
         
         
-new_puzzle = Puzzle()
-new_puzzle.fillBoard()
+# new_puzzle = Puzzle()
+# new_puzzle.fillBoard()
 
 # new_puzzle.kind = "Diagonal"
 # new_puzzle.whatBoard()
