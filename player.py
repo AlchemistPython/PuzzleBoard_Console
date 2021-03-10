@@ -1,6 +1,6 @@
 class Player:
     
-    def __init__(self, name="Player 1"):
+    def __init__(self, name):
         self.__name = name
         self.__number = None
     

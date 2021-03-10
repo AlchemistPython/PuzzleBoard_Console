@@ -75,47 +75,49 @@ class Puzzle:
     # def number(self):
     #     del self.__number
     
-    # getter
+    # getter of puzzle
     @property
     def kind(self):
-        return self.__kind
-    
+        return f"\nType of board: {self.__kind}"
+    # setter of puzzle
     @kind.setter
-    def kind(self, kind="Horizontal"):
+    def kind(self, kind=1):
         difficulty = {
-            1:'Horizontal',
-            2:'Vertical',
-            3:'Diagonal',
-            4:'Snail',
-            5:'Spiral',
-            6:'Impossible'
+            '1':'Horizontal',
+            '2':'Vertical',
+            '3':'Diagonal',
+            '4':'Snail',
+            '5':'Spiral',
+            '6':'Impossible'
             }
-        if kind in difficulty.values():
-            self.__kind = kind
+        if kind in difficulty.keys():
+            self.__kind = difficulty[kind]
         else:
             raise ValueError("The option isn't here!")
-    
+    # deleter of puzzle
     @kind.deleter
     def kind(self):
         del self.__kind
+        
     # i don't know if this its convinces me, think more at respect
     def __patternBoard(self):
         """Method that store the patterns of the challenge of this game"""
         boards = {
-            "Horizontal" : [['1','2','3','4'],['5','6','7','8'],['9','10','11','12'],['13','14','15',' ']],
-            "Vertical" : [['1','5','9','13'],['2','6','10','14'],['3','7','11','15'],['4','8','12',' ']],
-            "Diagonal" : [['7','11','14',' '],['4','8','12','15'],['2','5','9','13'],['1','3','6','10']],
-            "Snail": [['1','2','3','4'],['12','13','14','5'],['11',' ','15','6'],['10','9','8','7']],
-            "Spiral": [['7','8','9','10'],['6','1','2','11'],['5','4','3','12'],[' ','15','14','13']],
-            "Impossible": [['15','14','13','12'],['11','10','9','8'],['7','6','5','4'],['3','2','1',' ']]
+            'Horizontal' : [['1','2','3','4'],['5','6','7','8'],['9','10','11','12'],['13','14','15',' ']],#Horizontal
+            'Vertical' : [['1','5','9','13'],['2','6','10','14'],['3','7','11','15'],['4','8','12',' ']],#Vertical
+            'Diagonal' : [['7','11','14',' '],['4','8','12','15'],['2','5','9','13'],['1','3','6','10']],#Diagonal
+            'Snail': [['1','2','3','4'],['12','13','14','5'],['11',' ','15','6'],['10','9','8','7']],#Snail
+            'Spiral': [['7','8','9','10'],['6','1','2','11'],['5','4','3','12'],[' ','15','14','13']],#Spiral
+            'Impossible': [['15','14','13','12'],['11','10','9','8'],['7','6','5','4'],['3','2','1',' ']]#Impossibe
         }
         self.__predefinedboard = boards[self.__kind]
         return self.__predefinedboard
+    
     @showPuzzle
     def whatBoard(self):
         """Method that print the board to use"""
         self.__patternBoard()
-        print(f"\n== {self.__kind} Puzzle ==")
+        print(f"\n== {self.__kind} Puzzle ==\n to solve:")
         puzzle_board = self.__predefinedboard
         return puzzle_board
         
