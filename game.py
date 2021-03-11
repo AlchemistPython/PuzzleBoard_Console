@@ -28,20 +28,13 @@ class Game(Puzzle):
               5.- Spiral
               6.- Impossible
               """)
-        
     @property
-    def points(self):
+    def score(self):
         return self.__counter
     
-    @points.setter
     def points(self):
         self.__counter -= 1
-    
-    @points.deleter
-    def points(self):
-        del self.__counter
-                
-
+        return self.__counter             
 
 def start_game():
     Game().instructions()
@@ -51,7 +44,21 @@ def start_game():
     new_game = Game()
     new_game.kind = type_board
     new_game.whatBoard()
+    print("Puzzle to solve")
+    new_game.fillBoard()
+    print(new_game.score)
     # begin the puzzle
-    
-
+    while True:
+        number = input("What number move? ")
+        new_game.number = number
+        new_game.swapItems(new_game.number)
+        new_game.points()
+        print(f"Score: {new_game.score}")
+        if new_game.compareBoard():
+            print("End Game, you win!")
+            break
+        elif new_game.score == 0:
+            print("End Game, you lost. Your points are up.")
+            break
+        
 start_game()

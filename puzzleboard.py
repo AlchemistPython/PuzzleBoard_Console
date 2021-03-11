@@ -1,7 +1,7 @@
 from random import shuffle
 def showPuzzle(function):
-    def printPuzzle(self):
-        puzzle = function(self)
+    def printPuzzle(self,*args):
+        puzzle = function(self,*args)
         
         for account, rows in enumerate(puzzle):
             print("\n-----------------------")
@@ -28,7 +28,7 @@ class Puzzle:
         temporal_list = list()
         shuffle(self.__numbers) 
         for account, number in enumerate(self.__numbers,start=1):
-            number = str(number) if account != 16 else self.__EMPTY
+            number = number if number != '16' else self.__EMPTY
             temporal_list.append(number)
             if account in (4,8,12,16):
                 self.__board.append(temporal_list)
@@ -45,10 +45,10 @@ class Puzzle:
         return row, col
     
     @showPuzzle
-    def swapItems(self):
+    def swapItems(self, number):
         """Method that swap the items if there are near"""
         empty_row, empty_col = self.__findItem(self.__EMPTY)
-        player_row, player_col = self.__findItem(self.__number)
+        player_row, player_col = self.__findItem(number)
         
         move_player = [(empty_row - 1, empty_col),(empty_row + 1,empty_col),(empty_row,empty_col +1),(empty_row, empty_col -1)]
         
@@ -58,23 +58,7 @@ class Puzzle:
             print("\nCan't move, empty space isn't close!")
         
         return self.__board
-    # it's just temporal, this it's gonna be in player class
-    # getter
-    # @property
-    # def number(self):
-    #     return self.__number
-    # # setter
-    # @number.setter
-    # def number(self, n):
-    #     if n in self.__numbers:
-    #         self.__number = n
-    #     else:
-    #         raise TypeError("Expected a number from the board!")
-    # # deleter
-    # @number.deleter
-    # def number(self):
-    #     del self.__number
-    
+        
     # getter of puzzle
     @property
     def kind(self):
@@ -117,16 +101,22 @@ class Puzzle:
     def whatBoard(self):
         """Method that print the board to use"""
         self.__patternBoard()
-        print(f"\n== {self.__kind} Puzzle ==\n to solve:")
+        print(f"\n== {self.__kind} Puzzle ==\n")
         puzzle_board = self.__predefinedboard
         return puzzle_board
+    
+    def compareBoard(self):
+        if self.__board == self.__predefinedboard:
+            return True
+        return False 
         
         
 # new_puzzle = Puzzle()
 # new_puzzle.fillBoard()
 
-# new_puzzle.kind = "Diagonal"
+# new_puzzle.kind = "1"
 # new_puzzle.whatBoard()
+# print(new_puzzle.compareBoard())
 # del new_puzzle.kind
 
 # new_puzzle.kind = "Spiral"
